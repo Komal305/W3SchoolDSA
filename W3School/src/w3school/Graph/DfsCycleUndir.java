@@ -1,12 +1,12 @@
 package w3school.Graph;
 
-public class GraphDFS {
-
+public class DfsCycleUndir {
+	
 	private int[][] adjMatrix;
 	private char[] vertex;
 	private int size;
 
-	public GraphDFS(int size) {
+	public DfsCycleUndir(int size) {
 		this.size = size;
 		this.adjMatrix = new int[size][size];
 		this.vertex = new char[size];
@@ -45,26 +45,41 @@ public class GraphDFS {
 			System.out.println("vertex " + i++ + " " + (char) ver);
 	}
 	
-	/*******************DFS Util***************************/
-	private void dfsUtill(int v, boolean[] visited) {
-		visited[v]=true;
-		System.out.print(vertex[v]+"--> ");
+	/*************  dfs for cyclic  *****************/
+	
+	private boolean dfsUtil(int v, boolean[] visited, int parent) {
+		visited[v] = true;
 		for(int i=0; i<size; i++) {
-			if(adjMatrix[v][i]==1 && !visited[i]) {
-				dfsUtill(i, visited);
+			if(adjMatrix[v][i]==1) {
+				
+				if(!visited[i]) {
+					if(dfsUtil(i, visited, v))
+						return true;
+				}else if(i!=parent) {
+					return true;
+				}
+				
 			}
 		}
+		return true;
 	}
+	
+	private boolean isCyclic() {
+		boolean[] visited = new boolean[size];
+		for(int i=0; i<size; i++) {
+			if(!visited[i]) {
+				if(dfsUtil(i, visited, -1))
+					return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	
 
-	private void DFS(char start) {
-		boolean[] v = new boolean[size];
-		int startVertex = new String(vertex).indexOf(start);//3
-		dfsUtill(startVertex, v);
-	}
-	
-	
 	public static void main(String[] args) {
-		GraphDFS g  = new GraphDFS(7);
+		DfsCycleUndir g = new DfsCycleUndir(7);
 		g.addVertex(0, 'A');
         g.addVertex(1, 'B');
         g.addVertex(2, 'C');
@@ -84,9 +99,9 @@ public class GraphDFS {
         g.addEdge(1, 5); // B - F
 
         g.print();
-
-        System.out.println("\nDepth First Search starting from vertex D:");
-        g.DFS('D');
-    }
+        
+       
+        System.out.println(" g.isCyclic() :====="+  g.isCyclic());
+	}
 
 }
