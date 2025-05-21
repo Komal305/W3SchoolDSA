@@ -47,8 +47,8 @@ public class DfsCycleUndir {
 	
 	/*************  dfs for cyclic  *****************/
 	
-	private boolean dfsUtil(int v, boolean[] visited, int parent) {
-		visited[v] = true;
+	private boolean dfsUtil(int v, boolean[] visited, int parent) {//0,v,-1 ||  2,v,0|| 1, v, 2|| 5,v,1
+		visited[v] = true;//0 2 1 5
 		for(int i=0; i<size; i++) {
 			if(adjMatrix[v][i]==1) {
 				
@@ -61,7 +61,7 @@ public class DfsCycleUndir {
 				
 			}
 		}
-		return true;
+		return false;
 	}
 	
 	private boolean isCyclic() {

@@ -59,7 +59,7 @@ public class DfsBsfGraphUnDirected {
 	private void DFS(char start) {
 		boolean[] v = new boolean[size];
 		int startVertex = new String(vertex).indexOf(start);//3
-		dfsUtill(startVertex, v);
+		dfsUtill(startVertex, v);//3,v
 	}
 	
 	
@@ -68,13 +68,14 @@ public class DfsBsfGraphUnDirected {
 		int[] queue = new int[size];
 		int qStart = 0, qEnd =0;
 		
-		int startVertex = new String(vertex).indexOf(startVertexData);
-		queue[qEnd++] = startVertex;
-		visited[startVertex] = true;
+		int startVertex = new String(vertex).indexOf(startVertexData);//3
+		queue[qEnd++] = startVertex;//[3,
+		visited[startVertex] = true;//[ 0,1 ,2 ,true ,4, 5,6,]
 		
-		while(qStart<qEnd) {
-			int currentVertex = queue[qStart++];
-			System.out.print(vertex[currentVertex]+"-->");
+		while(qStart<qEnd) {//0<1 1<2 2<3 3<7 4<7 5<7 6<7
+			/*3 0 2 4 1 5  6*/int currentVertex = queue[qStart++];//qs 1 2 3 4 5 6
+			System.out.print(currentVertex+";");
+			System.out.print(vertex[currentVertex]+"-->");//d a c e b f g
 		
 				
 			for(int i=0; i<size; i++) {
